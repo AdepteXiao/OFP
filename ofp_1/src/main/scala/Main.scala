@@ -25,7 +25,8 @@ case class Calcs(xSt: BigDecimal,
   }
 
   def printTaylorSeriesTable(): Unit = {
-    println("\tx\t\t|\tf(x)\t\t|\tTaylor(x)\t|\tTI")
+    println("Значения функции на заданном интервале\n" +
+            "\tx\t\t|\tf(x)\t\t|\tTaylor(x)\t|\tTI")
     println("-------------------------------------------------")
     val x = xSt
     printTaylorSerie(x)
@@ -36,7 +37,7 @@ case class Calcs(xSt: BigDecimal,
     val fx = math.atan(x.toDouble)
     val (taylorX, n) = taylorSeriesArctan(x, e)
     println("%.4f \t|\t %.4f \t|\t %.4f \t|\t %d".format(x, fx, taylorX, n))
-    if (x < xFin) {
+    if (if (xSt < xFin) x < xFin else x > xFin) {
       printTaylorSerie(x + dx)
     }
   }
@@ -51,8 +52,10 @@ object Main {
       try {
         val numbers = input.map(BigDecimal(_))
         val Array(xSt, xFin, dx, e) = numbers
-        require(xFin > xSt, "Конечное значение должно быть больше начального значения")
-        require(dx > 0, "Шаг должен быть положительным числом")
+//        require(xFin > xSt, "Конечное значение должно быть больше начального значения")
+        require(xFin > 1 || xSt > 1, "Х должны быть > 1")
+        require((xFin - xSt).abs % dx.abs == 0 && ((xFin - xSt > 0 && dx > 0) || (xFin - xSt < 0 && dx < 0)), "С заданным шагом невозможно достичь наибольшее значение x ")
+//        require(dx > 0, "Шаг должен быть положительным числом")
         require(e > 0, "Ошибка должна быть положительным числом")
         val calcs = Calcs(xSt, xFin, dx, e)
         calcs.printTaylorSeriesTable()

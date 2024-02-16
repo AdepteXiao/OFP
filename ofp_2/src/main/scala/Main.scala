@@ -11,6 +11,7 @@ object Main {
       println("Файл считан")
       println("Введите количество слов наименьшей длины, которые следует вывести")
       val num = readLine().toInt
+      require(num >= 0, "Количество слов не может быть меньше нуля")
       val words = file.getLines.flatMap(_.split("\\s+")).filter(_.length > 1).toList
       val shortestWords = words.sortBy(word => (word.length, word)).take(num)
       shortestWords.foreach(println)
