@@ -53,7 +53,7 @@ object Main {
         val numbers = input.map(BigDecimal(_))
         val Array(xSt, xFin, dx, e) = numbers
 //        require(xFin > xSt, "Конечное значение должно быть больше начального значения")
-        require(xFin > 1 || xSt > 1, "Х должны быть > 1")
+        require(xFin > 1 && xSt > 1, "Х должны быть > 1")
         require((xFin - xSt).abs % dx.abs == 0 && ((xFin - xSt > 0 && dx > 0) || (xFin - xSt < 0 && dx < 0)), "С заданным шагом невозможно достичь наибольшее значение x ")
 //        require(dx > 0, "Шаг должен быть положительным числом")
         require(e > 0, "Ошибка должна быть положительным числом")
