@@ -49,8 +49,9 @@ case class StringConverter(inp: List[String]){
   def getRaw: ArrayBuffer[String]  = {
     val symbols = ArrayBuffer[String]()
     for (let <- inp) {
-      if (let.toUpperCase != "CAPSLOCK" && let.toUpperCase != "SHIFT")
-      symbols.addOne(let)
+      if (let.toUpperCase != "CAPSLOCK" && let.toUpperCase != "SHIFT"){
+        symbols.addOne(let)
+      }
     }
     symbols
   }
@@ -68,21 +69,26 @@ case class StringConverter(inp: List[String]){
     println(res)
     res
   }
-
-
 }
-
-
 
 
 object Main {
   def main(args: Array[String]): Unit = {
-    println("Hello world!")
-    val input = readLine().split("\\s+").toList
-    val conv = StringConverter(input)
-    conv.getString
-    println(conv.getRaw)
-    println(conv.getString)
-    conv.isCapsLocked
+//    val input = readLine().split("\\s+").toList
+    val test_1 = "Shift h e capslock l l shift o".split("\\s+").toList
+    val test_2 = "ShiFt    h e capSlOck l    l shift O".split("\\s+").toList
+    val test_3 = "shift S r i  capslock Jayawa shift r denepura capslock shift K otte".split("\\s+").toList
+    val lst = List(test_1, test_2, test_3)
+    for (t <- lst) {
+      val conv = StringConverter(t)
+      println("----------------------------")
+      println(conv.getAlNum)
+      println(conv.getRaw)
+      println(conv.getString)
+      conv.isCapsLocked
+      println("----------------------------")
+
+    }
+
   }
 }
