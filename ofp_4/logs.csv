@@ -1,0 +1,13 @@
+inpStr,func,resStr
+"Shift, h, e, capslock, l, l, shift, o",getString,HeLLo
+"Shift, h, e, capslock, l, l, shift, o",getAllNum,"[H, e, L, L, o]"
+"Shift, h, e, capslock, l, l, shift, o",getString,HeLLo
+"Shift, h, e, capslock, l, l, shift, o",isCapsLocked,false
+"ShiFt, h, e, capSlOck, l, l, shift, O",getString,HeLLo
+"ShiFt, h, e, capSlOck, l, l, shift, O",getAllNum,"[H, e, L, L, o]"
+"ShiFt, h, e, capSlOck, l, l, shift, O",getString,HeLLo
+"ShiFt, h, e, capSlOck, l, l, shift, O",isCapsLocked,false
+"shift, S, r, i, capslock, Jayawa, shift, r, denepura, capslock, shift, K, otte",getString,SriJAYAWArDENEPURAKotte
+"shift, S, r, i, capslock, Jayawa, shift, r, denepura, capslock, shift, K, otte",getAllNum,"[S, r, i, J, A, Y, A, W, A, r, D, E, N, E, P, U, R, A, K, o, t, t, e]"
+"shift, S, r, i, capslock, Jayawa, shift, r, denepura, capslock, shift, K, otte",getString,SriJAYAWArDENEPURAKotte
+"shift, S, r, i, capslock, Jayawa, shift, r, denepura, capslock, shift, K, otte",isCapsLocked,false

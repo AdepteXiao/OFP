@@ -16,7 +16,7 @@ object Main {
       println(conv.getAlNum(t))
       println(conv.getRaw(t))
       println(conv.getString(t))
-      conv.isCapsLocked(t)
+      println(conv.isCapsLocked(t))
       println("----------------------------")
     }
   }

@@ -1,9 +1,7 @@
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
-class StringConverter{
-  private val buffer: ArrayBuffer[(Int, String)] = ArrayBuffer().empty
-
+class StringConverter {
   private def getSymbol(sym: String, cs: Boolean, sh: Boolean): String = {
     val flag = if (sh) !cs else cs
     if (flag) {
@@ -14,10 +12,11 @@ class StringConverter{
 
   def getString(inp: List[String]): String = {
     val len = inp.size
+
     @tailrec
     def makeString(i: Int, cs: Boolean, prgr: String, sh: Boolean): String = {
       val ch = inp(i).toUpperCase()
-      if (i == len - 1){
+      if (i == len - 1) {
         if (ch != "CAPSLOCK" && ch != "SHIFT") {
           return prgr + getSymbol(ch, cs, sh)
         }
@@ -33,6 +32,7 @@ class StringConverter{
         makeString(i + 1, cs, prgr + getSymbol(ch, cs, sh), sh = false)
       }
     }
+
     makeString(0, cs = false, "", sh = false)
   }
 
@@ -45,10 +45,10 @@ class StringConverter{
     String.format("[%s]", symbols.toList.mkString(", "))
   }
 
-  def getRaw(inp: List[String]): String  = {
+  def getRaw(inp: List[String]): String = {
     val symbols = ArrayBuffer[String]()
     for (let <- inp) {
-      if (let.toUpperCase != "CAPSLOCK" && let.toUpperCase != "SHIFT"){
+      if (let.toUpperCase != "CAPSLOCK" && let.toUpperCase != "SHIFT") {
         symbols.addOne(let)
       }
     }
@@ -57,16 +57,22 @@ class StringConverter{
 
   def isCapsLocked(inp: List[String]): Boolean = {
     val len = inp.size
-    val cs = false
+
+    @tailrec
     def Cl(cs: Boolean, i: Int): Boolean = {
       val ch = inp(i).toUpperCase()
       if (i != len - 1) {
-        Cl(if (ch == "CAPSLOCKED") !cs else cs, i + 1)
+        if (ch.equals("CAPSLOCK")) {
+          Cl(!cs, i + 1)
+        } else {
+          Cl(cs, i + 1)
+        }
+      } else {
+        cs
       }
-      cs
     }
-    val res = Cl(cs, 0)
-    println(res)
+
+    val res = Cl(cs = false, 0)
     res
   }
 }
