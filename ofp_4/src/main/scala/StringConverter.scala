@@ -4,8 +4,10 @@ import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 import com.github.tototoshi.csv._
 
-class StringConverter {
-  val buffer: ArrayBuffer[(String, Func, String)] = ArrayBuffer().empty
+import scala.collection.IterableOnce.iterableOnceExtensionMethods
+
+class StringConverter(val buffer: ArrayBuffer[(String, Func, String)] = ArrayBuffer().empty) {
+
 
   private def addToBuffer(str: String, func: Func, result: String): Unit = {
     buffer += ((str, func, result))
@@ -98,9 +100,15 @@ class StringConverter {
     addToBuffer(inp.mkString(", "), Funcs.ISCAPSLOCKED, res.toString)
     res.toString
   }
+
+  def printLogs(): Unit = {
+    buffer.foreach { case (inpStr, func, resStr) =>
+      println(s"$inpStr $func $resStr")
+    }
+  }
 }
 
-object StringConverter{
+object StringConverter {
   def writeToCSV(filename: String, logs: List[Log]): Unit = {
     println("Сохранение")
     val writer = CSVWriter.open(filename)
@@ -118,18 +126,23 @@ object StringConverter{
     writer.close()
   }
 
-  def readFromCSV(filename: String): List[Log] = {
+  def readFromCSV(filename: String): StringConverter = {
     println("Загрузка")
     val reader = CSVReader.open(filename)
-    val logs = reader.allWithHeaders().map { row =>
-      Log(
-        row("inpStr"),
-        Funcs.withName(row("func")),
-        row("resStr"),
-      )
+    val logs: ArrayBuffer[(String, Func, String)] = ArrayBuffer().empty
+    reader.allWithHeaders().foreach { row =>
+      try {
+        logs.addOne(
+          row("inpStr"),
+          Funcs.withName(row("func")),
+          row("resStr"),
+        )
+      } catch {
+        case e: Exception =>
+      }
     }
     reader.close()
-    logs
+    new StringConverter(logs)
   }
 }
 

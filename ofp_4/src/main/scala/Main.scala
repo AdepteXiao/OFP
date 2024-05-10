@@ -15,11 +15,10 @@ object Main {
       conv.getString(t)
       conv.isCapsLocked(t)
     }
-    StringConverter.writeToCSV("logs.csv", conv.buffer.map { case (inpStr, func, resStr) =>
-      Log(inpStr, func, resStr)}.toList
-    )
-    StringConverter.readFromCSV("logs.csv").foreach(println)
-
+//    StringConverter.writeToCSV("logs.csv", conv.buffer.map { case (inpStr, func, resStr) =>
+//      Log(inpStr, func, resStr)}.toList)
+    val loadedConverter = StringConverter.readFromCSV("logs.csv")
+    loadedConverter.printLogs()
     }
 //    for (t <- lst) {
 //      println("----------------------------")
