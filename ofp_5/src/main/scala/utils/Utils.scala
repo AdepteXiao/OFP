@@ -7,31 +7,35 @@ import java.io.NotSerializableException
 import scala.io.Source
 
 object Utils {
-  def createListOfMaps(jsonFilePath: String): List[Map[String, JsValue]] = {
-    val source = Source.fromFile(jsonFilePath)
-    val jsonString = try {
-      source.mkString
-    } finally {
-      source.close()
-    }
-
-    val jsonArr = Json.parse(jsonString).as[JsArray]
-
-    jsonArr.value.map(jsValue => jsValue.as[JsObject].value.toMap).toList
+def createListOfMaps(jsonFilePath: String): List[Map[String, String]] = {
+  val source = Source.fromFile(jsonFilePath)
+  val jsonString = try {
+    source.mkString
+  } finally {
+    source.close()
   }
 
-  def makeTreeFromJson(key: String, list: List[Map[String, JsValue]]): AVLTree = {
-    val tree = new AVLTree
-    list.foreach { map =>
-      if (map.contains(key)) {
-        tree.root = tree.insert(tree.root, key, map)
-//        println(map(key))
+  val jsonArr = Json.parse(jsonString).as[JsArray]
+
+  jsonArr.value.map(jsValue => {
+    jsValue.as[JsObject].value.toMap.map {
+      case (key, value: JsString) => (key, value.as[String])
+      case (key, value) => (key, value.toString())
+    }
+  }).toList
+}
+
+  def searchInMap(map: List[Map[String, String]], key: String, keyVal: String): ( Int, Map[String, String]) = {
+    var counter = 0
+    map.foreach { dict =>
+      if (dict.contains(key)) {
+        counter += 1
+        if (dict(key) == keyVal) {
+          return (counter, dict)
+        }
       }
     }
-    tree match {
-      case tree: AVLTree => tree
-      case _ => throw new NotSerializableException("Невозможно сделать дерево (убедитесь что ключ существует и файл не пустой)")
-    }
+    (counter, null)
   }
 
 }
