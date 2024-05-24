@@ -47,29 +47,31 @@ object MenuMethods extends Menu {
 
     }
   }
-  def makeRsaFromPqHandler(): Unit = {
+  private def makeRsaFromPqHandler(): Unit = {
     val (p, q) = pickPQ()
     val rsa = RSA.makeFromPQ(p, q)
     println("Success")
+//    println(rsa.toString)
     this.rsa = Option.apply(rsa)
   }
 
-  def makeRsaFromExistsHandler(): Unit = {
+  private def makeRsaFromExistsHandler(): Unit = {
     val n = Utils.readBigInt("Enter N:")
     val e = Utils.readBigInt("Enter E:")
     val d = Utils.readBigInt("Enter D:")
     val rsa = new RSA(n, e, d)
     println("Success")
+//    println(rsa.toString)
     this.rsa = Option.apply(rsa)
   }
 
-  def encryptFromConsoleHandler(): Unit = {
+  private def encryptFromConsoleHandler(): Unit = {
     println("Enter message:")
     val message = StdIn.readLine()
     println(s"Encrypted message:\n ${rsa.get.encrypt(message)}")
   }
 
-  def decryptFromConsoleHandler(): Unit = {
+  private def decryptFromConsoleHandler(): Unit = {
     println("Enter message:")
     val message = StdIn.readLine()
     try {
@@ -79,7 +81,7 @@ object MenuMethods extends Menu {
   }
   }
 
-  def encryptToFileHandler(): Unit = {
+  private def encryptToFileHandler(): Unit = {
     println("Enter file name:")
     val filePath = StdIn.readLine()
     println("Enter message:")
@@ -96,7 +98,7 @@ object MenuMethods extends Menu {
     }
   }
 
-  def decryptFromFileHandler(): Unit = {
+  private def decryptFromFileHandler(): Unit = {
     println("Enter file name:")
     val filePath = StdIn.readLine()
     val source = Source.fromFile(filePath)

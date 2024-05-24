@@ -7,7 +7,8 @@ object Main {
     var tree = AVLTree.makeTreeFromJson("name", map)
     AVLTree.serialize(tree, "data/tree.csv")
     tree = AVLTree.deserialize("data/tree.csv")
-    println(tree.search("Aachen"))
-    println(Utils.searchInMap(map, "name", "Aachen"))
+    println(tree.search("Asco"))
+    println(Utils.searchInMap(map, "name", "Asco"))
+    println(tree.root.height)
   }
 }
